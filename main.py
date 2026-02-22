@@ -57,6 +57,9 @@ def is_winner(board: list[list[str]], piece: str) -> bool:
 
     return False
 
+def is_draw(board: list[list[str]]) -> bool:
+    return all(cell != "_" for row in board for cell in row)
+
 
 def run(board:list[list[str]], col:int, rows:int)-> None:
     p1 = "X"
@@ -78,6 +81,10 @@ def run(board:list[list[str]], col:int, rows:int)-> None:
             print(f"player {current} wins!")
             return
 
+        if is_draw(board):
+            print_board(board)
+            print("Draws!")
+            return
         
         
         if current == p1:
