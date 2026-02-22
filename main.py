@@ -27,6 +27,37 @@ def get_choice() -> int:
             
         print('input must be between 1 to 7')
 
+
+def is_winner(board: list[list[str]], piece: str) -> bool:
+    rows = len(board)
+    cols = len(board[0])
+
+    for row in range(rows):
+        for col in range(cols - 3):
+            if all(board[row][col+i] == piece for i in range(4)):
+                return True
+
+
+    for row in range(rows - 3):
+        for col in range(cols):
+            if all(board[row+i][col] == piece for i in range(4)):
+                return True
+
+    
+    for row in range(rows - 3):
+        for col in range(cols - 3):
+            if all(board[row+i][col+i] == piece for i in range(4)):
+                return True
+
+    
+    for row in range(3, rows):
+        for col in range(cols - 3):
+            if all(board[row-i][col+i] == piece for i in range(4)):
+                return True
+
+    return False
+
+
 def run(board:list[list[str]], col:int, rows:int)-> None:
     p1 = "X"
     p2 = "O"
@@ -41,6 +72,13 @@ def run(board:list[list[str]], col:int, rows:int)-> None:
         if not ok:
             print("this is full please choice another.")
             continue
+        
+        if is_winner(board, current):
+            print_board(board)
+            print(f"player {current} wins!")
+            return
+
+        
         
         if current == p1:
             current = p2
